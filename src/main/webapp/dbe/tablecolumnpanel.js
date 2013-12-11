@@ -11,7 +11,6 @@ DBE.TableColumnPanel = function(config) {
 		readOnly : config.readOnly
 	});
 	form.columnWidth = .3;
-
 	var cfg = {
 		plain : true,
 		frame : false,
@@ -23,7 +22,6 @@ DBE.TableColumnPanel = function(config) {
 
 	// call
 	DBE.TableColumnPanel.superclass.constructor.call(this, config);
-
 	// 注册事件,同步Grid 与 Form之间的值.
 	var funFieldOnChangeHandler = function(fld, newVal, oldVal, silent) {
 		var record = grid.getSelectionModel().getSelected();
@@ -92,7 +90,6 @@ DBE.TableColumnPanel = function(config) {
 	form.getFields().each(function(item) {
 		item.on('change', funFieldOnChangeHandler);
 	});
-
 	// 用于生成SQL语句的工具函数..
 	var funCreateTableSQL = function(schema, table) {
 		var store = grid.getStore();
@@ -146,7 +143,6 @@ DBE.TableColumnPanel = function(config) {
 		var store = grid.getStore();
 		return "sql:no sql~!+:" + schema + "_" + table;
 	}
-
 	// 公布属性
 	this.columnGrid = grid;
 	this.sqlMaker = {

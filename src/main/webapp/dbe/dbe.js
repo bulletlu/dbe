@@ -3,6 +3,7 @@ DBE = function() {
 	return {
 		init : function() {
 		},
+		
 		/**
 		 * 从指定url处下载文件..，dbeIFrame 申明在main.html中；
 		 */
@@ -32,6 +33,7 @@ DBE = function() {
 			root : 'types',
 			fields : ['typeName', 'resetLength', 'resetScale']
 		}),
+		
 		/**
 		 * 为Ajax控件添加事件，以处理login已失效的情况
 		 */
@@ -52,6 +54,7 @@ DBE = function() {
 				}
 			});
 		},
+		
 		copyToClipboard : function(value) {
 			// copy value 到剪贴板
 			new Ext.ux.ClipBoard(value);

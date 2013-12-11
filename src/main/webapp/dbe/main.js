@@ -128,6 +128,7 @@ DBE.MainWindow = function(config) {
 	// call 父类构建器
 	DBE.MainWindow.superclass.constructor.call(this, config);
 }
+
 Ext.extend(DBE.MainWindow, Ext.Viewport, {
 	ie6Fix : function() {
 		// fix toppanel..

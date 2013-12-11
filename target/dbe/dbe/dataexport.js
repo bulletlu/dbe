@@ -67,7 +67,7 @@ DBE.DataExport = function(config) {
 		id : 'dataExportWindow',
 		layout : 'fit',
 		width : 614,
-		height : 550,
+		//height : 550,
 		plain : true,
 		frame : false,
 		border : false,
@@ -93,7 +93,6 @@ Ext.extend(DBE.DataExport, Ext.Window, {
 		var realHeight = 100;// 初始值 是100
 		fromPanel.items.each(function(item, idx, length) {
 			var ss = item.getSize();
-			//alert(ss.width+'/'+ss.height);
 			realHeight += item.getSize().height;
 		});
 		return realHeight;

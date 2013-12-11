@@ -104,6 +104,18 @@ DBE.SQLQueryPanel = function(config) {
 		}
 
 	});
+	ds.on('exception', function(dataProxy, type, action, options, response, arg) {
+		var obj = Ext.util.JSON.decode(response.responseText);
+		// load 数据失败..
+		//alert("Load Grid Data 失败~~~!");
+		//Ext.Msg.show({
+//			title:'出错了',
+//			msg : obj.msg,
+//			alignType : 'tl-tl?'
+//		});
+		queryGridPanel.setActiveTab(1);
+		message.setValue(obj.msg);
+	});
 
 	// 准备配置参数
 	var cfg = {

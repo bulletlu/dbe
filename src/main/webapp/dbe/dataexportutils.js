@@ -34,8 +34,8 @@ DBE.DataExportUtils = function() {
 		var formset = new Ext.form.FieldSet({
 			title : '导出字段',
 			width:600,
-			height:100,
-			autoHeight : false,
+			//height:100,
+			autoHeight : true,
 			items : [{
 				layout :'column',
 				items:[{				
@@ -59,7 +59,7 @@ DBE.DataExportUtils = function() {
 		});
 		var h = Math.ceil(i/4)+1;
 		//alert('i='+i+'  h='+h);
-		formset.setSize(600,h*27);
+		//formset.setSize(600,h*27);
 		return formset;
 	}
 
@@ -195,7 +195,6 @@ DBE.DataExportUtils = function() {
 		});
 		fldStartPageNo.setValue(currentPageNo);
 		fldEndPageNo.setValue(currentPageNo);
-		formset.setSize(600,110);
 		return formset;
 	}
 	/**
@@ -253,7 +252,6 @@ DBE.DataExportUtils = function() {
 				}]
 			}
 		});
-		formset.setSize(600,60);
 		return formset;
 	}
 

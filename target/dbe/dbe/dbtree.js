@@ -74,6 +74,7 @@ DBE.DBTreePanel = function(config) {
 		this.menus.add(action);
 	}
 }
+
 Ext.extend(DBE.DBTreePanel, Ext.tree.TreePanel, {
 	select : function(node) {// 选择指定Node.
 		this.getSelectionModel().select(node);

@@ -2,11 +2,12 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.cninfo</groupId>
-  <artifactId>jdbexplorer</artifactId>
+  <artifactId>dbe</artifactId>
   <packaging>war</packaging>
   <version>0.0.1-SNAPSHOT</version>
   <name>jdbexplorer Maven Webapp</name>
   <url>http://maven.apache.org</url>
+  
   <dependencies>
   	<dependency>
   		<groupId>commons-codec</groupId>
@@ -174,10 +175,17 @@
             <configuration>
             	<scanIntervalSeconds>10</scanIntervalSeconds>
             	<webAppConfig>
-            		<contextPath>/dbe</contextPath>
+            		<contextPath>/test</contextPath>
             	</webAppConfig>
+            	<connectors> 
+            		<connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector"> 
+                		<port>8081</port> 
+                		<maxIdleTime>400000</maxIdleTime> 
+            		</connector> 
+        		</connectors> 
             </configuration>
         </plugin>
+        <!-- 
         <plugin>
              <groupId>org.codehaus.cargo</groupId>
              <artifactId>cargo-maven2-plugin</artifactId>
@@ -196,6 +204,16 @@
 	            </configuration>
              </configuration>
         </plugin>
+         -->
+    	<plugin>
+    		<groupId>org.codehaus.mojo</groupId>
+    		<artifactId>tomcat-maven-plugin</artifactId>
+    		<configuration>
+     			<url>http://127.0.0.1:8080/manager</url>
+     			<path>/dbe</path>
+     			<server>tomcat</server>
+    		</configuration>
+   		</plugin>
 	</plugins>
   </build>
   

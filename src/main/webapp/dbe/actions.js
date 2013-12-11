@@ -5,7 +5,6 @@ DBE.Actions = function(mainWindow) {
 		Ext.MessageBox.confirm("","您确认要退出系统~?",
 		function(btn){
 			if(btn=='yes'){
-			//if (confirm('您确认要退出系统~?')) {
 				var html = [
 						'<div id="divByebye" style="width:320px;height:220px;">',
 						'<div class="x-box-tl"><div class="x-box-tr"><div class="x-box-tc"></div></div></div>',

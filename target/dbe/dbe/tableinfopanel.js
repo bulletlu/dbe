@@ -2,7 +2,7 @@
 DBE.TableInfoPanel = function(config) {
 	// 助手类
 	var utils = new DBE.TableInfoPanelUtils(this);
-
+	
 	// 创建基本信息Panel
 	var dbName = config.databaseName;
 	var schemaName = config.schemaName;

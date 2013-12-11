@@ -68,15 +68,16 @@ DBE.DynamicGrid = function(config) {
 					}
 				}
 			},
-			
-			loadexception : function() {
-				// load 数据失败..
-				//alert("Load Grid Data 失败~~~!");
-				Ext.Msg.info({
-					message : 'Load Grid Data 失败',
-					alignType : 'tl-tl?'
-				});
-			},
+			//exception : function(obj, type, action, options, response, arg) {
+//				var obj = Ext.util.JSON.decode(response.responseText);
+//				// load 数据失败..
+//				//alert("Load Grid Data 失败~~~!");
+//				Ext.Msg.show({
+//					title:'出错了',
+//					msg : obj.msg,
+//					alignType : 'tl-tl?'
+//				});
+//			},
 			metachange : {
 				scope : this,
 				fn : function(store, meta) {
@@ -86,7 +87,6 @@ DBE.DynamicGrid = function(config) {
 					var ncm = dgutils.createColumnModel(tinfo, [rn, sm]);
 					this.reconfigure(store, ncm);
 					this.buildSearchFieldMenu(tinfo);
-
 				}
 			}
 		}
@@ -102,7 +102,7 @@ DBE.DynamicGrid = function(config) {
 			ds.reload();
 		}
 	});
-
+	
 	// 创建搜索菜单
 	this.searchFieldMenu = new Ext.menu.Menu();
 	this.buildSearchFieldMenu(tableInfo);
@@ -301,33 +301,29 @@ Ext.extend(DBE.DynamicGrid, Ext.grid.EditorGridPanel, {
 		if (items && items.length) {
 			for (var i = 0; i < items.length; i++) {
 				var item = items.get(i);
-				if (!item.getXType) {
-					// 取得当前页码
-					var dom = item.getEl();
-					if (dom.nodeName.toUpperCase() == "INPUT") {
-						result.pageNo = dom.value;
 
-						// 继续取得总页数
-						item = items.get(i + 1);
-						dom = item.getEl();
-						var html = dom.innerHTML;
-						//var pageMaxNo = html.replace('页共','').replace('页','').trim();
-						var pageMaxNoStr = '';
-						for (var x = 0; x < html.length; x++) {
-							var xchar = html.charAt(x);
-							if(xchar.trim().length > 0){
-								var num = new Number(xchar);
-								//alert(xchar+'/'+num);
-								if (!isNaN(num) && num >=0) {
-									//break;
-									pageMaxNoStr += num;
-								}
+				// 取得当前页码
+				var dom = item.getEl().dom;
+				if (dom.nodeName.toUpperCase() == "INPUT") {
+					result.pageNo = dom.value;
+
+					// 继续取得总页数
+					item = items.get(i + 1);
+					dom = item.getEl().dom;
+					var html = dom.innerHTML;
+					var pageMaxNoStr = '';
+					for (var x = 0; x < html.length; x++) {
+						var xchar = html.charAt(x);							
+						if(xchar.trim().length > 0){
+							var num = new Number(xchar);
+							if (!isNaN(num) && num >=0) {
+								//break;
+								pageMaxNoStr += num;
 							}
 						}
-						//alert(pageMaxNoStr);
-						result.pageTotal = new Number(pageMaxNoStr);
-						break;
 					}
+					result.pageTotal = new Number(pageMaxNoStr);
+					break;
 				}
 			}
 		}

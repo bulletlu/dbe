@@ -1,11 +1,11 @@
 // 登录窗口定义
 DBE.LoginWindow = function(config) {
 	var cm = new Ext.grid.ColumnModel([{
-		header : '登陆历史',
+		header : '登录历史',
 		resizable : false,
 		menuDisabled : true,
 		dataIndex : 'history',
-		width : '380'
+		width : '300'
 	}]);
 
 	var jsonds = new Ext.data.Store({
@@ -24,6 +24,9 @@ DBE.LoginWindow = function(config) {
 		cm : cm,
 		scope : this,
 		height : 100,
+		viewConfig : {
+			forceFit : true
+		},
 		listeners : {
 			celldblclick : function() {
 				// 双击历史纪录时自动填充表单
@@ -257,11 +260,13 @@ Ext.extend(DBE.LoginWindow, Ext.Window, {
 						if (rst && rst.msg) {
 							msg = rst.msg;
 						}
-						Ext.Msg.info({
-							message : msg,
-							alignRef : 'loginWindow',
-							alignType : 'tl-tr?'
-						});
+						//Ext.Msg.show({
+//							msg : msg,
+//							title : 'Error',
+//							alignRef : 'loginWindow',
+//							alignType : 'tl-tr?'
+//						});
+						Ext.ux.MsgTip.msg('提示', msg,true);
 					} else {
 						var resp = action.response;
 						var msg = resp.statusText + "[" + resp.status + "]";

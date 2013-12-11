@@ -27,6 +27,7 @@ Ext.ux.SearchField = function(config) {
 		}
 	}, this);
 }
+
 Ext.extend(Ext.ux.SearchField, Ext.form.TwinTriggerField, {
 	onTrigger1Click : function() {
 		if (this.hasSearch) {
