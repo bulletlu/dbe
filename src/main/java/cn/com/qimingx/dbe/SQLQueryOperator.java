@@ -78,7 +78,7 @@ public class SQLQueryOperator {
 		return ppr;
 	}
 
-	// 执行查询sql
+	// 执行查询select类查询
 	private ProcessResult<JSON> executeQuery(String sql, DBInfoService service,	GridQueryLoadBean param) {
 		int start = param.getStart();
 		int limit = param.getLimit();

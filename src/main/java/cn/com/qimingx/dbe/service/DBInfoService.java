@@ -23,6 +23,7 @@ public interface DBInfoService {
 	// 设置数据库链接对象
 	void setDBConnection(Connection conn);
 	
+	//设置审计模块
 	void setAudit(AuditInfo audit);
 
 	// 获取数据库链接对象
@@ -81,6 +82,26 @@ public interface DBInfoService {
 
 	// 数据库是否支持用于分页的SQL语句（如mysql的limit；oracle的rownum结合嵌套查询等）
 	boolean supportLimit();
+	
+	//
+	boolean isStandardDML(String sql);
+	//
+	boolean isMultiDML(String sql);
+	//
+	boolean isStandardDDL(String sql);
+	//
+	boolean isMultiDDL(String sql);
+	//
+	boolean isSelectQuery(String sql);
+	//
+	boolean isMultiQuery(String sql);
+	
+	ProcessResult<String> executeMultiDML(String sql, Map<String, Object> params);
+	
+	ProcessResult<String> executeMultiDDL(String sql, Map<String, Object> params);
+	
+	ProcessResult<TableInfo> executeMultiQuery(String sql, int start, int limit,String condition);
+	
 
 	// 返回用于分页的SQL语句
 	String getLimitSQLString(String originalSQL);

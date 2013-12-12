@@ -36,8 +36,7 @@ import org.apache.commons.logging.LogFactory;
  */
 public class SQLExec extends JDBCTask {
 	
-	private static final Log log = LogFactory
-	.getLog(SQLExec.class);
+	private static final Log log = LogFactory.getLog(SQLExec.class);
 
 //	private static Logger log = Logger.getLogger(SQLExec.class.getName());
 //	static {

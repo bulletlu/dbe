@@ -31,8 +31,7 @@ import cn.com.qimingx.spring.BaseMultiActionController;
 @Controller("initAction")
 public class InitActionController extends BaseMultiActionController {
 	// logger
-	private static final Log log = LogFactory
-			.getLog(InitActionController.class);
+	private static final Log log = LogFactory.getLog(InitActionController.class);
 
 	// 保存登录历史的cookie名称
 	private static final String LOGIN_COOKIE_NAME = "dbelogin";

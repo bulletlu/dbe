@@ -135,7 +135,7 @@ public class SQLUtils {
 	 * 从查询 sql 语句生成 计算记录总数的count sql语句
 	 */
 	public static String getCountSQL(String sql) {
-		Matcher fMatcher = FROM_PATTERN.matcher(sql);
+/*		Matcher fMatcher = FROM_PATTERN.matcher(sql);
 		if (!fMatcher.find()) {
 			throw new IllegalArgumentException("no from clause found in query");
 		}
@@ -143,8 +143,11 @@ public class SQLUtils {
 
 		Matcher oMatcher = ORDER_PATTERN.matcher(sql);
 		int oLoc = oMatcher.find() ? oMatcher.start(1) : sql.length();
+		
 
 		return "select count(*) " + sql.substring(fLoc, oLoc);
+		*/
+		return "select count(0) from (" + sql + ") tab_tab_999";
 	}
 
 	/**

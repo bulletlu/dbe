@@ -40,7 +40,8 @@ DBE.DataExport = function(config) {
 							this.close();
 						},
 						failure : function(form, action) {
-							alert("数据导出失败~~:" + action.result.msg);
+							//alert("数据导出失败~~:" + action.result.msg);
+							Ext.Msg.alert("警告","数据导出失败:" + action.result.msg);
 							// this.close();
 						}
 					});

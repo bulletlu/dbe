@@ -215,4 +215,30 @@ public abstract class AbstractDBInfoService implements DBInfoService {
 		fdts.add(new FieldDataType("BLOB"));
 		return fdts;
 	}
+	
+	//
+	public boolean isStandardDML(String sql){
+		if(sql.toLowerCase().startsWith("insert") 
+				||sql.toLowerCase().startsWith("update")  
+				||sql.toLowerCase().startsWith("delete") ){
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean isStandardDDL(String sql){
+		if(sql.toLowerCase().startsWith("create") 
+				||sql.toLowerCase().startsWith("alter")  
+				||sql.toLowerCase().startsWith("drop") ){
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean isSelectQuery(String sql){
+		if(sql.toLowerCase().startsWith("select")){
+			return true;
+		}
+		return false;
+	}
 }

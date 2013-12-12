@@ -47,6 +47,7 @@ DBE.DynamicGrid = function(config) {
 				scope : this,
 				fn : function(store, options) {
 					// load前 设置search相关的参数
+					/*
 					store.baseParams = store.baseParams || {};
 					var search = this.getSearchFields();
 					var value = this.searchInput.getValue();
@@ -57,6 +58,7 @@ DBE.DynamicGrid = function(config) {
 						store.baseParams.search = null;
 						store.baseParams.searchValue = null;
 					}
+					*/
 				}
 			},
 			load : {
@@ -108,10 +110,16 @@ DBE.DynamicGrid = function(config) {
 	this.buildSearchFieldMenu(tableInfo);
 
 	// 创建工具栏.top_bar
-	var tbar = new Ext.Toolbar([{
+	var tbar = new Ext.Toolbar(
+	[
+	/*
+		{
 		text : '搜索: ',
 		menu : this.searchFieldMenu
-	}, this.searchInput, '->']);
+	}, this.searchInput,
+	*/ 
+	'->']
+	);
 
 	// bottom_bar
 	var bbar = new Ext.PagingToolbar({
