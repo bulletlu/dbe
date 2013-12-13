@@ -73,6 +73,23 @@ class HelperDBInfoServiceTable {
 		}
 		return pr;
 	}
+	
+	// 执行查询sql
+	public ProcessResult<TableInfo> executeMultiQuery(String sql, int start, int limit, String condition) {
+		// 读取数据
+		ProcessResult<TableInfo> prTableInfo;
+		prTableInfo = readObjectInfo(sql, start, limit, condition, null);
+
+		// return
+		ProcessResult<TableInfo> pr = new ProcessResult<TableInfo>();
+		if (prTableInfo.isFailing()) {
+			pr.setMessage(prTableInfo.getMessage());
+		} else {
+			pr.setSuccess(true);
+			pr.setData(prTableInfo.getData());
+		}
+		return pr;
+	}
 
 	// 取得指定模式下 指定Table的数据，并进行分页
 	public ProcessResult<TableDataInfo> getTableData(final String schema,
@@ -205,6 +222,57 @@ class HelperDBInfoServiceTable {
 			return pr;
 		}
 	}
+	
+	// 通过查询SQL语句 生成TableInfo对象(columns、data)..
+	public ProcessResult<TableInfo> readObjectInfo(String sql, int start,
+			int limit, String condition, List<TableColumnInfo> columns) {
+		ProcessResult<TableInfo> pr = new ProcessResult<TableInfo>();
+		try {
+			// get statement
+			Statement stat = service.getDBConnection().createStatement(
+					ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY);
+			
+			// 读取数据
+			log.debug("load data by sql:" + sql);
+			log.info(audit.toString()+" "+sql);
+			ResultSet rs = stat.executeQuery(sql);
+			
+			// 如果需要 进行游标定位
+			int total = 0;// 指针移动计数器
+			while (rs.next()) {
+				total++;
+			}
+			// 如果未传递列信息 则自动读取列信息
+			if (columns == null || columns.size() == 0) {
+				columns = getTableColumnInfoByResultSet(rs);
+			}
+			// 读取指定数据行
+			if(start > 1){
+				rs.absolute(start);
+			}else{
+				rs.beforeFirst();
+			}
+			
+			TableDataInfo tableData = getTableDataInfoByResultSet(rs, limit,
+					columns, service.supportLimit(), total);
+			rs.close();
+
+			// 数据读取完成，returning
+			TableInfo tableInfo = new TableInfo();
+			tableInfo.setData(tableData);
+			tableInfo.setColumns(columns);
+			pr.setSuccess(true);
+			pr.setData(tableInfo);
+			return pr;
+		} catch (SQLException e) {
+			log.error("查询出错：" + e.getMessage());
+			pr.setMessage(e.getMessage());
+			e.printStackTrace();
+			return pr;
+		}
+	}
+
 
 	// 取得指定名称的Table的主键名称(多个主键以逗号分隔)
 	public ProcessResult<String> getPrimaryKeys(String schema, String name) {
@@ -228,9 +296,10 @@ class HelperDBInfoServiceTable {
 			if (pkName != null) {
 				pr.setSuccess(true);
 				pr.setData(pkName);
-			} else {
+			}/* else {
 				pr.setMessage(name + " without PrimaryKey!?");
 			}
+			*/
 			return pr;
 		} catch (SQLException e) {
 			log.error("getPrimaryKeys出错：" + e.getMessage());
@@ -303,7 +372,9 @@ class HelperDBInfoServiceTable {
 		columns = new ArrayList<TableColumnInfo>(length);
 		for (int i = 0; i < length; i++) {
 			int idx = i + 1;
-			String name = rsmd.getColumnName(idx);
+			//String name = rsmd.getColumnName(idx);
+			String name = rsmd.getColumnLabel(idx);
+			log.debug("FieldName("+idx+"): "+name);
 			int type = rsmd.getColumnType(idx);
 			int width = rsmd.getColumnDisplaySize(idx);
 			columns.add(new TableColumnInfo(name, type, width, true));

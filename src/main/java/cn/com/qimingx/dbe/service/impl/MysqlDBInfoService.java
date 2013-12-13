@@ -4,17 +4,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import cn.com.qimingx.dbe.FieldDataType;
 
 public class MysqlDBInfoService extends AbstractDBInfoService {
 	
-	private static final Log log = LogFactory.getLog(MysqlDBInfoService.class);
-	
-
 	public String getLimitSQLString(String originalSQL) {
 		return originalSQL;
 	}
@@ -50,5 +43,36 @@ public class MysqlDBInfoService extends AbstractDBInfoService {
 		return fdts;
 	}
 	
+	public boolean isMultiQuery(String sql){
+		if(sql.toLowerCase().startsWith("desc") 
+				||sql.toLowerCase().startsWith("show") ){
+			return true;
+		}
+		return false;
+	}
+	
+	/* 
+	 * 
+	 */
+	public boolean isMultiDML(String sql){
+		if(sql.toLowerCase().startsWith("replace")
+				||sql.toLowerCase().startsWith("use")){
+			return true;
+		}
+		return false;
+	}
+	
+	/* 
+	 * 
+	 */
+	public boolean isMultiDDL(String sql){
+		if(sql.toLowerCase().startsWith("grant")
+				||sql.toLowerCase().startsWith("revoke")
+				||sql.toLowerCase().startsWith("flush")){
+			return true;
+		}
+		return false;
+	}
+
 	
 }

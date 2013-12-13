@@ -241,4 +241,35 @@ public abstract class AbstractDBInfoService implements DBInfoService {
 		}
 		return false;
 	}
+	
+	public boolean isMultiDML(String sql){
+		return false;
+	}
+	
+	public boolean isMultiDDL(String sql){
+		return false;
+	}
+	
+	public boolean isMultiQuery(String sql){
+		return false;
+	}
+	
+	
+	public ProcessResult<String> executeMultiDML(String sql,
+			Map<String, Object> params) {
+		// TODO Auto-generated method stub
+		return this.executeUpdate(sql, params);
+	}
+
+	public ProcessResult<String> executeMultiDDL(String sql,
+			Map<String, Object> params) {
+		// TODO Auto-generated method stub
+		return this.executeUpdate(sql, params);
+	}
+
+	public ProcessResult<TableInfo> executeMultiQuery(String sql, int start,
+			int limit, String condition) {
+		// TODO Auto-generated method stub
+		return tableHelper.executeMultiQuery(sql, start, limit, condition);
+	}
 }

@@ -94,7 +94,7 @@ public interface DBInfoService {
 	//
 	boolean isSelectQuery(String sql);
 	//
-	boolean isMultiQuery(String sql);
+	boolean isMultiQuery(String sql);	
 	
 	ProcessResult<String> executeMultiDML(String sql, Map<String, Object> params);
 	

@@ -69,5 +69,32 @@ public class OracleDBInfoService extends AbstractDBInfoService {
 	public boolean supportLimit() {
 		return false;
 	}
+	
+	//
+	public boolean isMultiQuery(String sql){
+		if(sql.toLowerCase().startsWith("desc") 
+				||sql.toLowerCase().startsWith("show") ){
+			return true;
+		}
+		return false;
+	}
+	
+	//
+	public boolean isMultiDML(String sql){
+		if(sql.toLowerCase().startsWith("merge")){
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean isMultiDDL(String sql){
+		if(sql.toLowerCase().startsWith("grant")
+				||sql.toLowerCase().startsWith("revoke")
+				||sql.toLowerCase().startsWith("audit")
+				||sql.toLowerCase().startsWith("noaudit")){
+			return true;
+		}
+		return false;
+	}
 
 }

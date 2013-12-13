@@ -31,6 +31,7 @@ public class SQLQueryOperator {
 	private static final Log log = LogFactory.getLog(SQLQueryOperator.class);
 	
 	// 执行sql语句
+	/*
 	public ProcessResult<JSON> execute(DBInfoService service,
 			GridQueryLoadBean param) {
 		String sql = param.getSql().trim();
@@ -39,6 +40,35 @@ public class SQLQueryOperator {
 			if (sql.toLowerCase().startsWith("select")) {
 				return executeQuery(sql, service, param);
 			} else {
+				return executeUpdate(sql, service, param);
+			}
+		} else {
+			ProcessResult<JSON> pr = new ProcessResult<JSON>();
+			pr.setMessage("sql sentence invalid!");
+			return pr;
+		}
+	}
+	*/
+	
+	// 执行sql语句
+	public ProcessResult<JSON> execute(DBInfoService service,
+			GridQueryLoadBean param) {
+		String sql = param.getSql().trim();
+		
+		if (sql != null && sql.length() > 0) {
+			if (service.isSelectQuery(sql)) {
+				return executeQuery(sql, service, param);
+			} else if (service.isMultiQuery(sql)) {
+				return executeMultiQuery(sql, service, param);
+			}else if (service.isStandardDML(sql)) {
+				return executeUpdate(sql, service, param);
+			}else if (service.isMultiDML(sql)) {
+				return executeUpdate(sql, service, param);
+			}else if (service.isStandardDDL(sql)) {
+				return executeUpdate(sql, service, param);
+			}else if (service.isMultiDDL(sql)) {
+				return executeUpdate(sql, service, param);
+			}else{
 				return executeUpdate(sql, service, param);
 			}
 		} else {
@@ -85,6 +115,25 @@ public class SQLQueryOperator {
 		String condition = param.getSearchCondition();
 		ProcessResult<TableInfo> prtInfo;
 		prtInfo = service.executeQuery(sql, start, limit, condition);
+
+		ProcessResult<JSON> pr = new ProcessResult<JSON>();
+		if (prtInfo.isFailing()) {
+			pr.setFailing(true);
+			pr.setMessage(prtInfo.getMessage());
+		} else {
+			pr.setSuccess(true);
+			pr.setData(makeQueryResult(prtInfo.getData()));
+		}
+		return pr;
+	}
+	
+	// 执行查询select类查询
+	private ProcessResult<JSON> executeMultiQuery(String sql, DBInfoService service,GridQueryLoadBean param) {
+		int start = param.getStart();
+		int limit = param.getLimit();
+		String condition = param.getSearchCondition();
+		ProcessResult<TableInfo> prtInfo;
+		prtInfo = service.executeMultiQuery(sql, start, limit, condition);
 
 		ProcessResult<JSON> pr = new ProcessResult<JSON>();
 		if (prtInfo.isFailing()) {
