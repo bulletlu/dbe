@@ -374,7 +374,7 @@ class HelperDBInfoServiceTable {
 			int idx = i + 1;
 			//String name = rsmd.getColumnName(idx);
 			String name = rsmd.getColumnLabel(idx);
-			log.debug("FieldName("+idx+"): "+name);
+			//log.debug("FieldName("+idx+"): "+name);
 			int type = rsmd.getColumnType(idx);
 			int width = rsmd.getColumnDisplaySize(idx);
 			columns.add(new TableColumnInfo(name, type, width, true));

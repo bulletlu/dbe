@@ -74,7 +74,7 @@ public class TableInfo {
 	}
 
 	// 生成指定格式的数据文件
-	public ProcessResult<File> makeDataFile(String fileType, WorkDirectory wd) {
+	public ProcessResult<File> makeDataFile(String fileType, WorkDirectory wd, String[] fields) {
 		ProcessResult<File> pr = new ProcessResult<File>();
 		log.debug("export file type:"+fileType);
 		// 检查类型格式
@@ -94,16 +94,16 @@ public class TableInfo {
 
 			if (fileType.equalsIgnoreCase("CSV")) {
 				// 生成文件内容..
-				makeCSVContent(buffer);
+				makeCSVContent(buffer,fields);
 			} else if (fileType.equalsIgnoreCase("HTML") || fileType.equalsIgnoreCase("XLS")) {
 				// 生成HTML文件
-				makeHTMLContent(buffer);
+				makeHTMLContent(buffer,fields);
 			} else if (fileType.equalsIgnoreCase("PDF")) {
 				// 生成PDF格式的文件
-				makePDFContent(stream);
+				makePDFContent(stream,fields);
 			} else {
 				// 生成sql语句文件
-				makeSQLContent(buffer);
+				makeSQLContent(buffer,fields);
 			}
 			log.debug("export file2 :"+file.getPath());
 			pr.setSuccess(true);
@@ -120,7 +120,7 @@ public class TableInfo {
 	}
 
 	// 生成sql语句文件
-	private void makeSQLContent(BufferedWriter writer) throws IOException {
+	private void makeSQLContent(BufferedWriter writer, String[] fields) throws IOException {
 		List<Map<String, Object>> rows = data.getRows();
 		if (rows.size() < 1) {
 			return;
@@ -128,8 +128,16 @@ public class TableInfo {
 
 		// add table data header
 		String insert = "";
+		/*
 		for (TableColumnInfo column : getColumns()) {
 			String name = column.getName();
+			if (insert.length() > 0) {
+				insert += ",";
+			}
+			insert += name;
+		}
+		*/
+		for(String name :fields){
 			if (insert.length() > 0) {
 				insert += ",";
 			}
@@ -166,7 +174,7 @@ public class TableInfo {
 	}
 
 	// 生成PDF格式的文件内容
-	private void makePDFContent(OutputStream stream) throws IOException {
+	private void makePDFContent(OutputStream stream, String[] fields) throws IOException {
 		List<Map<String, Object>> rows = data.getRows();
 		if (rows.size() < 1) {
 			return;
@@ -187,8 +195,9 @@ public class TableInfo {
 			table.setBorder(1);
 
 			// add table data header
-			for (TableColumnInfo column : getColumns()) {
-				String name = column.getName();
+			//for (TableColumnInfo column : getColumns()) {
+				//String name = column.getName();
+			for(String name : fields){
 				Phrase phe = new Phrase(name, PDFUtils.createChineseFont());
 				Cell cell = new Cell(phe);
 				cell.setHorizontalAlignment(Cell.ALIGN_LEFT);
@@ -196,8 +205,10 @@ public class TableInfo {
 				table.addCell(new Cell(phe));
 			}
 			for (Map<String, Object> map : rows) {
-				for (TableColumnInfo column : getColumns()) {
-					Object value = map.get(column.getName());
+				//for (TableColumnInfo column : getColumns()) {
+					//Object value = map.get(column.getName());
+				for(String name : fields){
+					Object value = map.get(name);
 					String col = "　";
 					if (value != null) {
 						col = value.toString();
@@ -224,7 +235,7 @@ public class TableInfo {
 	}
 
 	// 生成html格式的文件内容
-	private void makeHTMLContent(BufferedWriter writer) throws IOException {
+	private void makeHTMLContent(BufferedWriter writer, String[] fields) throws IOException {
 		List<Map<String, Object>> rows = data.getRows();
 
 		writer.write("<html><head>");
@@ -233,16 +244,19 @@ public class TableInfo {
 		writer.write("</head><body><table border='1' width='95%' cellspacing='0'>");
 
 		String header = "";
-		for (TableColumnInfo column : getColumns()) {
-			String name = column.getName();
+		//for (TableColumnInfo column : getColumns()) {
+		//	String name = column.getName();
+		for(String name : fields){
 			header += "<td>" + name + "</td>";
 		}
 		writer.write("<tr>" + header + "</tr>");
 
 		for (Map<String, Object> map : rows) {
 			String row = "";
-			for (TableColumnInfo column : getColumns()) {
-				Object value = map.get(column.getName());
+			//for (TableColumnInfo column : getColumns()) {
+				//Object value = map.get(column.getName());
+			for(String name : fields){
+				Object value = map.get(name);
 				String col = (value == null || value.toString().trim().length()==0) ? "&nbsp;" : value.toString();
 				row += "<td>" + col + "</td>";
 			}
@@ -253,12 +267,13 @@ public class TableInfo {
 	}
 
 	// 生成 分号 ； 分隔的文件内容
-	private void makeCSVContent(BufferedWriter writer) throws IOException {
+	private void makeCSVContent(BufferedWriter writer, String[] fields) throws IOException {
 		List<Map<String, Object>> rows = data.getRows();
 		for (Map<String, Object> map : rows) {
 			String row = "";
-			for (TableColumnInfo column : getColumns()) {
-				row += map.get(column.getName()) + ";";
+			//for (TableColumnInfo column : getColumns()) {
+			for (String name : fields) {
+				row += map.get(name) + ";";
 			}
 			writer.write(row);
 			writer.newLine();

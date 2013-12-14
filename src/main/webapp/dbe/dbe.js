@@ -85,7 +85,8 @@ DBE = function() {
 					var tableinfo = false;
 					if (!rst.succeed && !rst.table) {
 						var msg = rst.msg ? rst.msg : Ext.encode(rst);
-						alert('打开[' + node.text + ']失败:' + msg);
+						//alert('打开[' + node.text + ']失败:' + msg);
+						Ext.ux.MsgTip.msg('提示', '打开[' + node.text + ']失败:' + msg,true);
 					} else {
 						tableinfo = rst.table;
 					}
@@ -93,7 +94,8 @@ DBE = function() {
 				},
 				failure : function(response) {
 					var json = response.responseText;
-					alert("请求[" + node.text + "]结构出错：" + json);
+					//alert("请求[" + node.text + "]结构出错：" + json);
+					Ext.ux.MsgTip.msg('提示', "请求[" + node.text + "]结构出错：" + json ,true);
 					runCallback(false);
 				}
 			});

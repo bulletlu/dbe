@@ -33,12 +33,14 @@ public abstract class AbstractDbeActionController extends
 
 		DBConnectionState dbcs = DBConnectionState.current(sess);
 		if (dbcs == null) {
-			pr.setMessage("current DBConnectionState is null~!");
+			//pr.setMessage("current DBConnectionState is null~!");
+			pr.setMessage("数据库连接超时或已断开");
 			return pr;
 		}
 
 		if (!dbcs.isConnection()) {
-			pr.setMessage("current DB Connection invalid~!");
+			//pr.setMessage("current DB Connection invalid~!");
+			pr.setMessage("数据库连接超时或已断开");
 			return pr;
 		}
 

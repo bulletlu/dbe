@@ -211,10 +211,10 @@ DBE.DynamicGrid = function(config) {
 			}
 		},
 		items : [
-			//actions.copyCellToClipboard, 
-			//actions.copyToClipboard,
-			//actions.copyColumnToClipboard,
-			//actions.copyColumnHeaderToClipboard, '-', 
+			actions.copyCellToClipboard, 
+			actions.copyToClipboard,
+			actions.copyColumnToClipboard,
+			actions.copyColumnHeaderToClipboard, '-', 
 			actions.dataExport]
 	});
 

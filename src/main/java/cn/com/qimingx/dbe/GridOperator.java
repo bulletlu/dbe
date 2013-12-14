@@ -265,7 +265,7 @@ public class GridOperator {
 		} else {
 			table.setTableName("NotTableName");
 		}
-		ProcessResult<File> fpr = table.makeDataFile(param.getFormatType(), wd);
+		ProcessResult<File> fpr = table.makeDataFile(param.getFormatType(), wd, param.getFields());
 		if (fpr.isFailing()) {
 			pr.setSuccess(false);
 			pr.setMessage(fpr.getMessage());
