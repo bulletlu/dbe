@@ -148,23 +148,33 @@ public class TableInfo {
 		for (Map<String, Object> map : rows) {
 			String row = "";
 			for (TableColumnInfo column : getColumns()) {
-				Object value = map.get(column.getName());
-				String col = "NULL";
-				if (value != null) {
-					col = value.toString();
-					ExtTypeInfo type = column.getExtType();
-					if (type.isDateType()) {
-						col = "toDate('" + col + "' HH24:mm)";
-					} else if (type.isBooleanType() && type.isNumberType()) {
-
-					} else {
-						col = "'" + col + "'";
+				String label = column.getName();
+				boolean finded = false;
+				for(String name : fields){
+					if(name.equals(label)){
+						finded = true;
+						break;
 					}
 				}
-				if (row.length() > 0) {
-					row += ",";
+				if(finded){
+					Object value = map.get(column.getName());
+					String col = "NULL";
+					if (value != null) {
+						col = value.toString();
+						ExtTypeInfo type = column.getExtType();
+						if (type.isDateType()) {
+							col = "toDate('" + col + "' HH24:mm)";
+						} else if (type.isBooleanType() && type.isNumberType()) {
+	
+						} else {
+							col = "'" + col + "'";
+						}
+					}
+					if (row.length() > 0) {
+						row += ",";
+					}
+					row += col;
 				}
-				row += col;
 			}
 			writer.write(insert + row + ")");
 			writer.newLine();
@@ -187,7 +197,8 @@ public class TableInfo {
 			// create table
 			Map<String, Object> row = rows.get(0);
 			Set<String> columns = row.keySet();
-			Table table = new Table(columns.size());
+			//Table table = new Table(columns.size());
+			Table table = new Table(fields.length);
 			table.setWidth(90);
 			table.setAutoFillEmptyCells(true);
 			table.setPadding(3);

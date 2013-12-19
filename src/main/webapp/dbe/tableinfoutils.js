@@ -12,7 +12,7 @@ DBE.TableInfoPanelUtils = function(tableInfoPanel) {
 			layout : 'column',
 			title : '基本信息',
 			defaults : {
-				columnWidth : .30,
+				columnWidth : .33,
 				layout : 'form',
 				labelAlign : 'top'
 			},
@@ -46,7 +46,7 @@ DBE.TableInfoPanelUtils = function(tableInfoPanel) {
 					fieldLabel : '表名称',
 					value : table,
 					name : 'table',
-					anchor : '92%',
+					anchor : '95%',
 					selectOnFocus : true,
 					allowBlank : false
 				}

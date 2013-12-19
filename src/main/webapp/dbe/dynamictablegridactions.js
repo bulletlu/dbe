@@ -18,11 +18,12 @@ DBE.DynamicTableGridActions = function(dtgrid, tableinfo) {
 				if (!rst.msg) {
 					rst.msg = "未知消息";
 				}
-				Ext.Msg.info({
-					message : rst.msg,
-					alignRef : dtgrid.getId(),
-					alignType : 'tl-tl?'
-				});
+//				Ext.Msg.info({
+//					message : rst.msg,
+//					alignRef : dtgrid.getId(),
+//					alignType : 'tl-tl?'
+//				});
+				Ext.ux.MsgTip.msg('提示',  rst.msg, true);
 				if (completeCall) {
 					completeCall(success);
 				}
@@ -147,7 +148,8 @@ DBE.DynamicTableGridActions = function(dtgrid, tableinfo) {
 		var record = grid.store.getAt(rowIdx);// 记录
 		// 检查是否 <HTML>内容..
 		if (record.data[colName] == "[HTML]") {
-			alert("Sorry，[HTML]的查看与修改正在实现中....");
+			//alert("Sorry，[HTML]的查看与修改正在实现中....");
+			Ext.ux.MsgTip.msg('警告', "Sorry，[HTML]的查看与修改正在实现中....", true);
 			return false;
 		}
 
@@ -158,7 +160,8 @@ DBE.DynamicTableGridActions = function(dtgrid, tableinfo) {
 			// 准备提交参数
 			var pkName = tableinfo.pkColumnName;
 			if (!pkName || pkName == '') {
-				alert("程序错误：pkColumnName 无效~~!");
+				//alert("程序错误：pkColumnName 无效~~!");
+				Ext.ux.MsgTip.msg('警告', "程序错误：pkColumnName 无效", true);
 				return false;
 			}
 			// 生成pk信息
@@ -198,7 +201,8 @@ DBE.DynamicTableGridActions = function(dtgrid, tableinfo) {
 				},
 				failure : function(response) {
 					var json = response.responseText;
-					alert("读取长字段失败:[" + json + "]");
+					//alert("读取长字段失败:[" + json + "]");
+					Ext.ux.MsgTip.msg('警告', "读取长字段失败:[" + json + "]", true);
 				}
 			});
 			return false;

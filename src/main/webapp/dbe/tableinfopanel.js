@@ -14,6 +14,7 @@ DBE.TableInfoPanel = function(config) {
 		isCreate : config.isCreate,
 		readOnly : config.readOnly
 	});
+	
 	var fsColumns = new Ext.form.FieldSet({
 		layout : 'fit',
 		collapsed : true,
@@ -69,11 +70,12 @@ Ext.extend(DBE.TableInfoPanel, Ext.Panel, {
 		this.columnsFieldSet.expand(true);
 
 		// 重新计算大小
-		this.baseFieldSet.setWidth(size.width - 12);
-
-		size.height = size.height - this.baseFieldSet.getFrameHeight();
-		size.height -= 160;// 按钮栏
+		this.baseFieldSet.setWidth(size.width - 24);
+		var hei = size.height - this.baseFieldSet.getFrameHeight() - 160;
+		//size.height = size.height - this.baseFieldSet.getFrameHeight();
+		//size.height -= 160;// 按钮栏
 		this.columnsFieldSet.setHeight(size.height);
+		this.columnsFieldSet.setWidth(size.width-24);
 	},
 	/*
 	 * 初始化 预置的列信息
@@ -91,7 +93,8 @@ Ext.extend(DBE.TableInfoPanel, Ext.Panel, {
 		if (tableName) {
 			tableName = tableName.trim();
 			if (tableName.length == 0) {
-				alert("创建表失败:未指定表名称~！");
+				//alert("创建表失败:未指定表名称~！");
+				Ext.ux.MsgTip.msg('提示', "创建表失败:未指定表名称~！",true);
 				return;
 			}
 
@@ -131,11 +134,13 @@ Ext.extend(DBE.TableInfoPanel, Ext.Panel, {
 					}
 				});
 			} else {
-				alert("取得create table sql语句出错：" + sql);
+				//alert("取得create table sql语句出错：" + sql);
+				Ext.ux.MsgTip.msg('提示', "取得create table sql语句出错：" + sql,true);
 			}
 
 		} else {
-			alert("创建表失败：取得表名称出错~~！");
+			//alert("创建表失败：取得表名称出错~~！");
+			Ext.ux.MsgTip.msg('提示', "创建表失败：取得表名称出错~~！",true);
 		}
 	},
 	/**
@@ -146,6 +151,7 @@ Ext.extend(DBE.TableInfoPanel, Ext.Panel, {
 		var tableName = this.initialConfig.tableName;
 		var sql = this.columnPanel.sqlMaker.build(schema, tableName);
 
-		alert('修改表结构...:' + sql);
+		//alert('修改表结构...:' + sql);
+		Ext.ux.MsgTip.msg('提示', '修改表结构...:' + sql,true);
 	}
 });

@@ -68,11 +68,12 @@ DBE.DBTreePanelActions = function(dbtree, tabPanel) {
 				});
 			} else {
 				//alert('未知的元素类型，，：' + type);
-				Ext.Msg.info({
-					title:'提示',
-					message : '未知的元素类型' + type,
-					alignType : 'tl-tl?'
-				});
+//				Ext.Msg.info({
+//					title:'提示',
+//					message : '未知的元素类型' + type,
+//					alignType : 'tl-tl?'
+//				});
+				Ext.ux.MsgTip.msg('提示', '未知的元素类型' + type,true);
 			}
 		} else {
 			tabPanel.setActiveTab(tab);
@@ -122,18 +123,20 @@ DBE.DBTreePanelActions = function(dbtree, tabPanel) {
 						text : node.text
 					},
 					success : function() {
-						Ext.Msg.info({
-							message : '[' + node.text + ' ]删除成功',
-							alignType : 'tl-tl?'
-						});
+//						Ext.Msg.info({
+//							message : '[' + node.text + ' ]删除成功',
+//							alignType : 'tl-tl?'
+//						});
+						Ext.ux.MsgTip.msg('提示', '[' + node.text + ' ]删除成功',true);
 						node.remove();
 					},
 					failure : function() {
 						//alert("删除失败");
-						Ext.Msg.info({
-							message : '[' + node.text + ' ]删除失败',
-							alignType : 'tl-tl?'
-						});
+//						Ext.Msg.info({
+//							message : '[' + node.text + ' ]删除失败',
+//							alignType : 'tl-tl?'
+//						});
+						Ext.ux.MsgTip.msg('提示', '[' + node.text + ' ]删除失败',true);
 					}
 				});
 			}});
@@ -245,11 +248,7 @@ DBE.DBTreePanelActions = function(dbtree, tabPanel) {
 				});
 			} else {
 				//alert('未知的元素类型，，：' + type);
-				Ext.Msg.info({
-					title:'提示',
-					message : '未知的元素类型' + type,
-					alignType : 'tl-tl?'
-				});
+				Ext.ux.MsgTip.msg('提示', '未知的元素类型' + type,true);
 			}
 		}
 	});

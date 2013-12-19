@@ -18,7 +18,8 @@ DBE.DynamicGridUtils = {
 					return col;
 				}
 			}
-			alert("tableInfo.getColumnInfoByName出错，列名称无效：" + name);
+			//alert("tableInfo.getColumnInfoByName出错，列名称无效：" + name);
+			Ext.ux.MsgTip.msg('警告', "tableInfo.getColumnInfoByName出错，列名称无效：" + name, true);
 		}
 	},
 	/**

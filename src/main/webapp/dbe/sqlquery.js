@@ -106,13 +106,6 @@ DBE.SQLQueryPanel = function(config) {
 	});
 	ds.on('exception', function(dataProxy, type, action, options, response, arg) {
 		var obj = Ext.util.JSON.decode(response.responseText);
-		// load 数据失败..
-		//alert("Load Grid Data 失败~~~!");
-		//Ext.Msg.show({
-//			title:'出错了',
-//			msg : obj.msg,
-//			alignType : 'tl-tl?'
-//		});
 		queryGridPanel.setActiveTab(1);
 		message.setValue(obj.msg);
 	});
@@ -180,11 +173,12 @@ Ext.extend(DBE.SQLQueryPanel, Ext.Panel, {
 		} else {
 			//alert("请输入SQL语句~~");
 			//Ext.MessageBox.alert('提示','请输入SQL语句');
-			Ext.Msg.info({
-				title : '提示',
-				message : '请输入SQL语句',
-				alignType : 'tl-tl?'
-			});
+//			Ext.Msg.info({
+//				title : '提示',
+//				message : '请输入SQL语句',
+//				alignType : 'tl-tl?'
+//			});
+			Ext.ux.MsgTip.msg('提示',  '请输入SQL语句', true);
 		}
 		//alert('wait');
 		if (hasInitSQL) {

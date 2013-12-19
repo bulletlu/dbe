@@ -22,17 +22,11 @@ DBE.TableInfoWindow = function(config) {
 					node.reload();
 				}
 				//alert("[" + tableName + "] 表创建成功~~.");				
-				Ext.Msg.info({
-					message : "[" + tableName + "] 表创建成功",
-					alignType : 'tl-tl?'
-				});
+				Ext.ux.MsgTip.msg('提示',  "[" + tableName + "] 表创建成功", true);
 				winInfo.close();
 			} else {
 				//alert("[" + tableName + "] 表创建失败:" + msg);
-				Ext.Msg.info({
-					message : "[" + tableName + "] 表创建失败:" + msg,
-					alignType : 'tl-tl?'
-				});
+				Ext.ux.MsgTip.msg('提示', "[" + tableName + "] 表创建失败:" + msg, true);
 			}
 		});
 	};
@@ -47,8 +41,10 @@ DBE.TableInfoWindow = function(config) {
 	var size = Ext.getBody().getSize(true);// 取得默认大小
 	var title = config.isCreate ? '创建表' : '查看属性 - ' + node.text;
 	var cfg = {
-		width : size.width * 0.85,
-		height : size.height * 0.85,
+		//width : size.width * 0.85,
+		//height : size.height * 0.85,
+		width : 800,
+		height : 600,
 		title : title,
 		layout : 'fit',
 		plain : true,
@@ -86,11 +82,7 @@ DBE.TableInfoWindow = function(config) {
 				} else {
 					// alert("检查表表结构是否有变动..~");
 					if (tableInfoPanel.columnPanel.checkChanges()) {
-						/*if (!confirm('您确认要放弃表结构修改吗?')) {
-							return;
-						}
-						*/
-						Ext.MessageBox.confirm('提示','您确认要放弃本次创建吗~?',function(btn){
+						Ext.MessageBox.confirm('提示','您确认要放弃表结构修改吗?',function(btn){
 							if(btn == 'yes'){
 								obj.close();
 							}

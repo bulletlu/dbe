@@ -270,17 +270,19 @@ Ext.extend(DBE.LoginWindow, Ext.Window, {
 					} else {
 						var resp = action.response;
 						var msg = resp.statusText + "[" + resp.status + "]";
-						alert('登录失败:' + msg);
+						//alert('登录失败:' + msg);
+						Ext.ux.MsgTip.msg('提示', msg,true);
 					}
 				}
 			});
 		} else {
 			// alert('数据填写不完整~~!');
-			Ext.Msg.info({
-				message : '数据填写不完整~~!',
-				alignRef : 'loginWindow',
-				alignType : 'tl-tr?'
-			});
+//			Ext.Msg.info({
+//				message : '数据填写不完整~~!',
+//				alignRef : 'loginWindow',
+//				alignType : 'tl-tr?'
+//			});
+			Ext.ux.MsgTip.msg('提示',  '数据填写不完整~~!', true);
 		}
 	}
 });

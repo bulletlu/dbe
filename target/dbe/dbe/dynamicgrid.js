@@ -70,7 +70,7 @@ DBE.DynamicGrid = function(config) {
 					}
 				}
 			},
-			//exception : function(obj, type, action, options, response, arg) {
+//			exception : function(obj, type, action, options, response, arg) {
 //				var obj = Ext.util.JSON.decode(response.responseText);
 //				// load 数据失败..
 //				//alert("Load Grid Data 失败~~~!");
@@ -84,7 +84,8 @@ DBE.DynamicGrid = function(config) {
 				scope : this,
 				fn : function(store, meta) {
 					var tinfo = this.initialConfig.tableinfo;
-					tinfo.readOnly = true;
+					//tinfo.readOnly = true;
+					tinfo.readOnly = false;
 					tinfo.columns = meta.fields;
 					var ncm = dgutils.createColumnModel(tinfo, [rn, sm]);
 					this.reconfigure(store, ncm);
@@ -210,11 +211,11 @@ DBE.DynamicGrid = function(config) {
 				}
 			}
 		},
-		items : [
+		items : [/*
 			actions.copyCellToClipboard, 
 			actions.copyToClipboard,
 			actions.copyColumnToClipboard,
-			actions.copyColumnHeaderToClipboard, '-', 
+			actions.copyColumnHeaderToClipboard, '-',*/ 
 			actions.dataExport]
 	});
 

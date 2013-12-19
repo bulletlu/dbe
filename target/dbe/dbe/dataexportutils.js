@@ -94,7 +94,8 @@ DBE.DataExportUtils = function() {
 						fldEndPageNo.setValue(currentPageNo);
 					} else if (chkAll.checked) {
 						fldStartPageNo.setValue(1);
-						fldEndPageNo.setValue(totalPageNo);
+						//fldEndPageNo.setValue(totalPageNo);
+						fldEndPageNo.setValue(0);
 					} else if (chkRangePages.checked) {
 						fldStartPageNo.enable();
 						fldEndPageNo.enable();

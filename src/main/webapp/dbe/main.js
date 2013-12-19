@@ -156,7 +156,8 @@ Ext.extend(DBE.MainWindow, Ext.Viewport, {
 			},
 			failure : function(response) {
 				var json = response.responseText.trim();
-				alert('请求失败:' + json);
+				//alert('请求失败:' + json);
+				Ext.ux.MsgTip.msg('提示', '请求失败:' + json,true);
 			}
 		});
 	},
@@ -186,11 +187,13 @@ Ext.extend(DBE.MainWindow, Ext.Viewport, {
 			failure : function(response) {
 				if (response.status == 200) {
 					var json = response.responseText.trim();
-					alert("Load DBTreePanel失败：" + json);
+					//alert("Load DBTreePanel失败：" + json);
+					Ext.ux.MsgTip.msg('提示', "Load DBTreePanel失败：" + json,true);
 				} else {
 					var msg = response.statusText;
 					msg += "[" + response.status + "]";
-					alert('Load DBTreePanel出错:' + msg);
+					//alert('Load DBTreePanel出错:' + msg);
+					Ext.ux.MsgTip.msg('提示', 'Load DBTreePanel出错:' + msg,true);
 				}
 			}
 		});

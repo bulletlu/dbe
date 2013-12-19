@@ -28,15 +28,17 @@ DBE.CLobPanel = function(config, lobWindow) {
 						this.clobValue = clob;
 						refreshSaveActionStat();
 						// alert('保存成功~~..');
-						Ext.Msg.info({
-							message : "保存成功~!",
-							alignRef : lobWindow.getId(),
-							alignType : 'tl-tr?'
-						});
+//						Ext.Msg.info({
+//							message : "保存成功~!",
+//							alignRef : lobWindow.getId(),
+//							alignType : 'tl-tr?'
+//						});
+						Ext.ux.MsgTip.msg('提示', "保存成功~!", true);
 					},
 					failure : function(response) {
 						var json = response.responseText;
-						alert("保存CLOB出错：" + json);
+						//alert("保存CLOB出错：" + json);
+						Ext.ux.MsgTip.msg('提示', "保存CLOB出错：" + json, true);
 					}
 				});
 			}
@@ -89,10 +91,12 @@ DBE.CLobPanel = function(config, lobWindow) {
 					if (filePath) {
 						DBE.downfile(filePath);
 					} else {
-						alert("程序错误，无法下载：[filePath is null]");
+						//alert("程序错误，无法下载：[filePath is null]");
+						Ext.ux.MsgTip.msg('提示', "程序错误，无法下载：[filePath is null]", true);
 					}
 				} else {
-					alert("当前字段为空，无法下载。");
+					//alert("当前字段为空，无法下载。");
+					Ext.ux.MsgTip.msg('提示', "当前字段为空，无法下载。", true);
 				}
 			}
 		}, action]
@@ -131,14 +135,16 @@ Ext.extend(DBE.CLobPanel, Ext.Panel, {
 						textareCLOB.setDisabled(false);
 						textareCLOB.focus(false, 100);
 					} else {
-						alert("程序错误：[textare is null]~");
+						//alert("程序错误：[textare is null]~");
+						Ext.ux.MsgTip.msg('提示', "程序错误：[textare is null]", true);
 					}
 					wait.hide();
 				},
 				failure : function(resp, opt) {
 					var json = resp.responseText;
 					wait.hide();
-					alert("保存CLOB出错：" + json);
+					//alert("保存CLOB出错：" + json);
+					Ext.ux.MsgTip.msg('提示', "保存CLOB出错：" + json, true);
 				}
 			});
 		} else {

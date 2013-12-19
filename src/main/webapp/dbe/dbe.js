@@ -15,7 +15,8 @@ DBE = function() {
 				// alert(iframe.dom.src);
 				iframe.dom.src = url;
 			} else {
-				alert("无法下载：URL为空~~!");
+				//alert("无法下载：URL为空~~!");
+				Ext.ux.MsgTip.msg('警告', "无法下载：URL为空!", true);
 			}
 		},
 		/**
@@ -42,7 +43,7 @@ DBE = function() {
 			return;// TODO:暂时因为无法处理 alert窗口的问题，先关闭该功能。
 			Ext.Ajax.on("requestcomplete", function(conn, response, opt) {
 				var json = response.responseText;
-				alert("@@@:" + json);
+				//alert("@@@:" + json);
 				if (json.charAt(0) == "{") {
 					var rst = eval("(" + json + ")");
 					if (rst.notLogin) {
@@ -67,7 +68,8 @@ DBE = function() {
 					// 呼叫回调函数，传出结构信息 tableinfo
 					callback(ti);
 				} else {
-					alert("回调函数 callback 无效~~!");
+					//alert("回调函数 callback 无效~~!");
+					Ext.ux.MsgTip.msg('警告', "回调函数 callback 无效!", true);
 				}
 			}
 

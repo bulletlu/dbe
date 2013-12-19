@@ -36,7 +36,8 @@ Ext.extend(DBE.SQLSwfEditor, Ext.Panel, {
 				swf : '../sqleditor/starter.swf'
 			});
 		} else {
-			alert("create sqlEditor div container errer~~.");
+			//alert("create sqlEditor div container errer~~.");
+			Ext.ux.MsgTip.msg('提示', "create sqlEditor div container errer"",true);
 		}
 	},
 	/**

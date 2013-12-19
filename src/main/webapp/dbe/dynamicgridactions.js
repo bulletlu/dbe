@@ -36,13 +36,15 @@ DBE.DynamicGridActions = function(dyGrid) {
 				}
 				// copy...
 				DBE.copyToClipboard(data);
-				Ext.Msg.info({
-					message : "[" + records.length + " 行数据] 已被复制到剪贴板~!"
-				});
+//				Ext.Msg.info({
+//					message : "[" + records.length + " 行数据] 已被复制到剪贴板~!"
+//				});
+				Ext.ux.MsgTip.msg('提示', "[" + records.length + " 行数据] 已被复制到剪贴板~!",true);
 			} else {
-				Ext.Msg.info({
-					message : "未发现数据，请选择需要复制的数据行~~!"
-				});
+//				Ext.Msg.info({
+//					message : "未发现数据，请选择需要复制的数据行~~!"
+//				});
+				Ext.ux.MsgTip.msg('提示', "未发现数据，请选择需要复制的数据行~~!",true);
 			}
 		}
 	});
@@ -67,9 +69,10 @@ DBE.DynamicGridActions = function(dyGrid) {
 				}
 
 				DBE.copyToClipboard(data);
-				Ext.Msg.info({
-					message : '[' + data + '] 已复制到剪贴板~'
-				});
+//				Ext.Msg.info({
+//					message : '[' + data + '] 已复制到剪贴板~'
+//				});
+				Ext.ux.MsgTip.msg('提示', '[' + data + '] 已复制到剪贴板~',true);
 			}
 		}
 	});
@@ -102,9 +105,10 @@ DBE.DynamicGridActions = function(dyGrid) {
 				}
 
 				DBE.copyToClipboard(data);
-				Ext.Msg.info({
-					message : '[' + cellName + '列] 已复制到剪贴板~'
-				});
+//				Ext.Msg.info({
+//					message : '[' + cellName + '列] 已复制到剪贴板~'
+//				});
+				Ext.ux.MsgTip.msg('提示', '[' + cellName + '列] 已复制到剪贴板~',true);
 			}
 		}
 	});
@@ -127,9 +131,10 @@ DBE.DynamicGridActions = function(dyGrid) {
 				}
 			}
 			DBE.copyToClipboard(data);
-			Ext.Msg.info({
-				message : '列名称 已复制到剪贴板~'
-			});
+//			Ext.Msg.info({
+//				message : '列名称 已复制到剪贴板~'
+//			});
+			Ext.ux.MsgTip.msg('提示', '列名称 已复制到剪贴板~', true);
 		}
 	});
 	/**
@@ -153,7 +158,8 @@ DBE.DynamicGridActions = function(dyGrid) {
 					sql : dyGrid.sqlText
 				}
 			} else {
-				alert("程序错误：无法取得 nodeInfo or sqlText~!");
+				//alert("程序错误：无法取得 nodeInfo or sqlText~!");
+				Ext.ux.MsgTip.msg('警告', "程序错误：无法取得 nodeInfo or sqlText!", true);
 				return;
 			}
 

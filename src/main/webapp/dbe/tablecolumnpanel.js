@@ -6,11 +6,13 @@ DBE.TableColumnPanel = function(config) {
 		readOnly : config.readOnly
 	});
 	grid.columnWidth = .7;
+	
 	var form = new DBE.TableColumnExtendForm({
 		isCreate : config.isCreate,
 		readOnly : config.readOnly
 	});
 	form.columnWidth = .3;
+	
 	var cfg = {
 		plain : true,
 		frame : false,

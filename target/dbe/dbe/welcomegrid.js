@@ -20,7 +20,8 @@ DBE.WelcomeGrid = function(config) {
 			},
 			loadexception : function() {
 				// load 数据失败..
-				alert("Load WelcomeGrid 失败:[" + url + "]");
+				//alert("Load WelcomeGrid 失败:[" + url + "]");
+				Ext.ux.MsgTip.msg('提示', "Load WelcomeGrid 失败:[" + url + "]" + msg,true);
 			}
 		}
 	});

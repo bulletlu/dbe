@@ -37,10 +37,12 @@ DBE.BLobPanel = function(config, lobWindow) {
 				if (filePath) {
 					DBE.downfile(filePath);
 				} else {
-					alert("程序错误，无法下载：[filePath is null]");
+					//alert("程序错误，无法下载：[filePath is null]");
+					Ext.ux.MsgTip.msg('提示', "程序错误，无法下载：[filePath is null]", true);
 				}
 			} else {
-				alert("当前字段为空，无法下载。");
+				//alert("当前字段为空，无法下载。");
+				Ext.ux.MsgTip.msg('提示', "当前字段为空，无法下载。", true);
 			}
 		}
 	};
@@ -67,12 +69,12 @@ DBE.BLobPanel = function(config, lobWindow) {
 					callback : {
 						uploadComplete : function(file) {
 							// tip
-							Ext.Msg.info({
-								message : file.name + " 上传完成~!",
-								alignRef : lobWindow.getId(),
-								alignType : 'tl-tr?'
-							});
-
+//							Ext.Msg.info({
+//								message : file.name + " 上传完成~!",
+//								alignRef : lobWindow.getId(),
+//								alignType : 'tl-tr?'
+//							});
+							Ext.ux.MsgTip.msg('提示', file.name + " 上传完成~!", true);
 							// TODO:根据文件后缀名称 判断是否是图片，以决定src的正确值..
 							//
 							// 修改图片显示

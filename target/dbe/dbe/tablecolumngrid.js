@@ -156,11 +156,12 @@ DBE.TableColumnGrid = function(config) {
 					}
 				}
 			} else {
-				alert("删除列失败：您至少应该留一个列~。");
+				//alert("删除列失败：您至少应该留一个列~。");
+				Ext.ux.MsgTip.msg('提示', "删除列失败：您至少应该留一个列。",true);
 			}
 		}
 	});
-
+	
 	// 准备配置参数
 	var cfg = {
 		ds : ds,
@@ -170,7 +171,7 @@ DBE.TableColumnGrid = function(config) {
 		border : false,
 		clicksToEdit : config.isCreate ? 1 : 2,
 		plugins : [c4, c5],
-		tbar : ['->', actAdd, actRemove],
+		tbar : config.isCreate? ['->', actAdd, actRemove]:['->'],
 		sm : new Ext.grid.RowSelectionModel({
 			singleSelect : true
 		}),
