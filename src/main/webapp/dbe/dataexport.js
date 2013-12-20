@@ -43,15 +43,9 @@ DBE.DataExport = function(config) {
 							//alert("数据导出失败~~:" + action.result.msg);
 							//Ext.Msg.alert("警告","数据导出失败:" + action.result.msg);
 							Ext.ux.MsgTip.msg('警告', "数据导出失败:" + action.result.msg, true);
-							// this.close();
 						}
 					});
 				} else {
-//					Ext.Msg.info({
-//						message : '数据填写无效，请检查~~!',
-//						alignRef : dataExportForm.getId(),
-//						alignType : 'tl-tr?'
-//					});
 					Ext.ux.MsgTip.msg('提示', '数据填写无效，请检查~~!',true);
 				}
 			}

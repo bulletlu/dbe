@@ -246,7 +246,7 @@ public class GridOperator {
 		int endNo = param.getEndPageNo();// 结束页码;
 		int pageRange = endNo - startNo + 1;// 页码区间
 		int start = startNo == 1 ? 1 : (startNo - 1) * param.getLimit() + 1;// 开始索引
-		int limit = pageRange * param.getLimit();
+		int limit = endNo== -1 ? -1:pageRange * param.getLimit();
 		log.debug("start：" + start + ",limit:" + limit);
 
 		// 取得查询结果

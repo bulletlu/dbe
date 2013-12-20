@@ -25,6 +25,7 @@ import cn.com.qimingx.dbe.DBConnectionState;
 import cn.com.qimingx.dbe.SQLQueryOperator;
 import cn.com.qimingx.dbe.action.bean.GridQueryLoadBean;
 import cn.com.qimingx.dbe.service.DBInfoService;
+import cn.com.qimingx.dbe.service.impl.QueryResultSetCache;
 import cn.com.qimingx.spring.UploadFile;
 
 /**
@@ -118,7 +119,6 @@ public class DbeSQLQueryActionController extends AbstractDbeActionController {
 			sendJSON(resp, prDBCS.toJSON());
 			return;
 		}
-
 		//
 		DBInfoService service = prDBCS.getData().getDBInfoService();
 		ProcessResult<JSON> pr = sqlQueryOperator.execute(service, param);

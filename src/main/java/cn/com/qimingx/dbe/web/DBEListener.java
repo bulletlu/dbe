@@ -13,7 +13,9 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import cn.com.qimingx.dbe.DBConnectionState;
 import cn.com.qimingx.dbe.service.WorkDirectory;
+import cn.com.qimingx.dbe.service.impl.QueryResultSetCache;
 import cn.com.qimingx.dbe.service.impl.TemporaryWorkDirectory;
 
 /**
@@ -41,7 +43,7 @@ public class DBEListener implements HttpSessionListener, ServletContextListener 
 			return (WorkDirectory) obj;
 		}
 	}
-
+	
 	// 应用启动时
 	public void contextInitialized(ServletContextEvent event) {
 	}
@@ -49,12 +51,17 @@ public class DBEListener implements HttpSessionListener, ServletContextListener 
 	// Sessiong创建
 	public void sessionCreated(HttpSessionEvent event) {
 		getWorkDirectory(event.getSession());
+		//销毁连接及其它资源
+		DBConnectionState dbcs = DBConnectionState.current(event.getSession());
+		dbcs.destroy(event.getSession());
 	}
 
 	// Session释放
 	public void sessionDestroyed(HttpSessionEvent event) {
 		String tag = event.getSession().getId();
 		getWorkDirectory(event.getSession()).cleanWorkDirectoryByTag(tag);
+		DBConnectionState dbcs = DBConnectionState.current(event.getSession());
+		dbcs.destroy(event.getSession());
 	}
 
 	// 应用关闭时

@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 import cn.com.qimingx.core.ProcessResult;
 import cn.com.qimingx.dbe.DBConnectionState;
 import cn.com.qimingx.dbe.service.WorkDirectory;
+import cn.com.qimingx.dbe.service.impl.QueryResultSetCache;
 import cn.com.qimingx.dbe.web.DBEListener;
 import cn.com.qimingx.spring.BaseMultiActionController;
 
@@ -58,4 +59,5 @@ public abstract class AbstractDbeActionController extends
 	protected WorkDirectory workDirectory(HttpServletRequest req) {
 		return DBEListener.getWorkDirectory(req.getSession(true));
 	}
+	
 }

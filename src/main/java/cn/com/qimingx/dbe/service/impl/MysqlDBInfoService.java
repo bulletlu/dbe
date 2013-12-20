@@ -45,7 +45,8 @@ public class MysqlDBInfoService extends AbstractDBInfoService {
 	
 	public boolean isMultiQuery(String sql){
 		if(sql.toLowerCase().startsWith("desc") 
-				||sql.toLowerCase().startsWith("show") ){
+				||sql.toLowerCase().startsWith("show")
+				||sql.toLowerCase().startsWith("use")){
 			return true;
 		}
 		return false;
@@ -55,8 +56,7 @@ public class MysqlDBInfoService extends AbstractDBInfoService {
 	 * 
 	 */
 	public boolean isMultiDML(String sql){
-		if(sql.toLowerCase().startsWith("replace")
-				||sql.toLowerCase().startsWith("use")){
+		if(sql.toLowerCase().startsWith("replace")){
 			return true;
 		}
 		return false;

@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import cn.com.qimingx.core.ProcessResult;
 import cn.com.qimingx.dbe.action.bean.GridQueryLoadBean;
 import cn.com.qimingx.dbe.service.DBInfoService;
+import cn.com.qimingx.dbe.service.impl.QueryResultSetCache;
 import cn.com.qimingx.json.MyJSONUtils;
 
 /**

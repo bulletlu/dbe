@@ -270,6 +270,10 @@ public abstract class AbstractDBInfoService implements DBInfoService {
 	public ProcessResult<TableInfo> executeMultiQuery(String sql, int start,
 			int limit, String condition) {
 		// TODO Auto-generated method stub
-		return tableHelper.executeMultiQuery(sql, start, limit, condition);
+		return tableHelper.executeQuery(sql, start, limit, condition);
+	}
+	
+	public void destroy(){
+		tableHelper.destroy();
 	}
 }

@@ -15,14 +15,12 @@ import org.springframework.dao.DataAccessException;
 
 import cn.com.qimingx.core.ProcessResult;
 import cn.com.qimingx.dbe.AuditInfo;
-import cn.com.qimingx.dbe.QueryResultSetCache;
 import cn.com.qimingx.dbe.TableColumnInfo;
 import cn.com.qimingx.dbe.TableDataInfo;
 import cn.com.qimingx.dbe.TableInfo;
 import cn.com.qimingx.dbe.TableColumnInfo.FKColumnInfo;
 import cn.com.qimingx.utils.MyUtils;
 import cn.com.qimingx.utils.SQLTypeUtils;
-import cn.com.qimingx.utils.SQLUtils;
 
 /**
  * @author inc062805
@@ -34,15 +32,15 @@ class HelperDBInfoServiceTable {
 	private AbstractDBInfoService service;
 	private AuditInfo audit;
 	
-	private QueryResultSetCache cache;
+	private QueryResultSetCache queryResultSetCache;
 	
 	// 构建器
 	public HelperDBInfoServiceTable(AbstractDBInfoService service, AuditInfo audit, Log log) {
 		this.service = service;
 		this.log = log;
-		this.audit = audit;
+		this.audit = audit;	
 		
-		cache = new QueryResultSetCache();
+		queryResultSetCache = new QueryResultSetCache();
 	}
 
 	// 执行更新 sql 语句
@@ -212,7 +210,7 @@ class HelperDBInfoServiceTable {
 		}
 	}
 	*/
-	
+	/*
 	// 通过查询SQL语句 生成TableInfo对象(columns、data)..
 		public ProcessResult<TableInfo> readTableInfo(String sql, int start,
 				int limit, String condition, List<TableColumnInfo> columns) {
@@ -270,13 +268,15 @@ class HelperDBInfoServiceTable {
 				return pr;
 			}
 		}
+		*/
 
-	/*
 	// 通过查询SQL语句 生成TableInfo对象(columns、data)..
 	public ProcessResult<TableInfo> readTableInfo(String sql, int start,
 			int limit, String condition, List<TableColumnInfo> columns) {
+		log.debug("start：" + start + ",limit:" + limit);
 		ProcessResult<TableInfo> pr = new ProcessResult<TableInfo>();
-		if(cache.isNeedToCacheIn(sql, start)){
+		ResultSet rs = queryResultSetCache.get(sql);
+		if(rs == null || start == 0 ){
 			// get statement
 			try{
 				Statement stat = service.getDBConnection().createStatement(
@@ -286,33 +286,45 @@ class HelperDBInfoServiceTable {
 				// 读取数据
 				log.debug("load data by sql:" + sql);
 				log.info(audit.toString()+" "+sql);
-				ResultSet rs = stat.executeQuery(sql);
-				
-				if (columns == null || columns.size() == 0) {
-					columns = getTableColumnInfoByResultSet(rs);
-				}
-				cache.cache(sql, rs, columns);
+				rs = stat.executeQuery(sql);
+				queryResultSetCache.put(sql, rs);
 			}catch (SQLException e) {
 				log.error("查询出错：" + e.getMessage());
 				pr.setMessage(e.getMessage());
 				e.printStackTrace();
 				return pr;
 			}
-			
 		}
 		
-		TableDataInfo tableData = cache.getTableDataInfoByCache(sql, start, limit);
-
-		// 数据读取完成，returning
-		TableInfo tableInfo = new TableInfo();
-		tableInfo.setData(tableData);
-		tableInfo.setColumns(cache.getColumns(sql));
-		pr.setSuccess(true);
-		pr.setData(tableInfo);
-		return pr;
+		try{
+			if(start == 0 ){
+				rs.beforeFirst();
+			}else{
+				rs.absolute(start);
+			}
+			
+			if (columns == null || columns.size() == 0) {
+				columns = getTableColumnInfoByResultSet(rs);
+			}
+			
+			TableDataInfo tableData = getTableDataInfoByResultSet(rs, limit,
+					columns, service.supportLimit(), start);
+			
+			// 数据读取完成，returning
+			TableInfo tableInfo = new TableInfo();
+			tableInfo.setData(tableData);
+			tableInfo.setColumns(columns);
+			pr.setSuccess(true);
+			pr.setData(tableInfo);
+			return pr;
+		}catch (SQLException e) {
+			log.error("查询出错：" + e.getMessage());
+			pr.setMessage(e.getMessage());
+			e.printStackTrace();
+			return pr;
+		}
 		
 	}
-	*/
 
 	// 取得指定名称的Table的主键名称(多个主键以逗号分隔)
 	public ProcessResult<String> getPrimaryKeys(String schema, String name) {
@@ -461,7 +473,7 @@ class HelperDBInfoServiceTable {
 	*/
 	
 	private TableDataInfo getTableDataInfoByResultSet(ResultSet rs, int limit,
-			List<TableColumnInfo> columns, boolean supportLimitSQL, long total)
+			List<TableColumnInfo> columns, boolean supportLimitSQL, long start)
 			throws SQLException {
 		// init..
 		List<Map<String, Object>> rows;
@@ -481,33 +493,15 @@ class HelperDBInfoServiceTable {
 			}
 		}
 		
-		total += counter;
-		if(rs.next()) total++; 
-		// return
-		return new TableDataInfo(total, rows);
-	}
-	
-	private TableDataInfo getTableDataInfoByResultSet(ResultSet rs,	List<TableColumnInfo> columns)
-			throws SQLException {
-		// init..
-		List<Map<String, Object>> rows;
-		rows = new ArrayList<Map<String, Object>>(25);
-
-		// read
-		int counter = 0;// limit计数器
-		while (rs.next()) {
-			Map<String, Object> row = new HashMap<String, Object>();
-			for (TableColumnInfo column : columns) {
-				Object value = readFieldValue(rs, column);
-				row.put(column.getName(), value);
-			}
-			rows.add(row);
-			++counter;
+		start += counter;
+		if(rs.next()){
+			start++;
+			rs.previous();
 		}
 		// return
-		return new TableDataInfo(counter, rows);
+		return new TableDataInfo(start, rows);
 	}
-	
+
 
 	/*
 	 * 从ResultSet中读取 指定列的值
@@ -549,4 +543,7 @@ class HelperDBInfoServiceTable {
 	}
 	
 	
+	public void destroy(){
+		queryResultSetCache.destroy();
+	}
 }

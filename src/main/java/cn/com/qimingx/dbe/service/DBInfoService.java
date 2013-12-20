@@ -108,4 +108,6 @@ public interface DBInfoService {
 
 	// 返回当前数据库支持的数据类型列表
 	List<FieldDataType> getDataTypes();
+	
+	void destroy();
 }

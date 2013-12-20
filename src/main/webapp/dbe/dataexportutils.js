@@ -93,10 +93,13 @@ DBE.DataExportUtils = function() {
 						fldStartPageNo.setValue(currentPageNo);
 						fldEndPageNo.setValue(currentPageNo);
 					} else if (chkAll.checked) {
+						fldEndPageNo.minValue = -1;
 						fldStartPageNo.setValue(1);
 						//fldEndPageNo.setValue(totalPageNo);
-						fldEndPageNo.setValue(0);
+						fldEndPageNo.setValue(-1);
 					} else if (chkRangePages.checked) {
+						fldStartPageNo.setValue(currentPageNo);
+						fldEndPageNo.setValue(currentPageNo);
 						fldStartPageNo.enable();
 						fldEndPageNo.enable();
 						fldStartPageNo.focus(true, true);
@@ -130,13 +133,13 @@ DBE.DataExportUtils = function() {
 		chkRangePages = new Ext.form.Radio(cfg);
 
 		// 输入框.起始页码
-		cfg = Ext.applyIf({
+		var dcfg = Ext.applyIf({
 			id : 'fldStartPageNo',
 			width : 25,
 			name : 'startPageNo',
 			disabled : true,
 			minValue : 1,
-			maxValue : totalPageNo,
+			//maxValue : totalPageNo,
 			anchor : '100%',
 			listeners : {
 				change : function(field, newValue, oldValue) {
@@ -147,13 +150,14 @@ DBE.DataExportUtils = function() {
 				}
 			}
 		}, chkDefaultsConfig);
-		fldStartPageNo = new Ext.form.NumberField(cfg);
+		fldStartPageNo = new Ext.form.NumberField(dcfg);
 		// 输入框.终止页码
 		cfg = Ext.applyIf({
 			id : 'fldEndPageNo',
-			name : 'endPageNo'
-		}, cfg);
+			name : 'endPageNo',
+		}, dcfg);
 		fldEndPageNo = new Ext.form.NumberField(cfg);
+		
 		// return formset结果
 		var formset = new Ext.form.FieldSet({
 			title : '导出范围',

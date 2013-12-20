@@ -147,6 +147,10 @@ public class DBConnectionState implements Serializable {
 
 		// remove dbcs
 		sess.removeAttribute(KEY_CURRENT_STATE);
+		
+		
+		DBInfoService service = getDBInfoService();
+		service.destroy();
 	}
 
 	// 取得数据库的详细属性信息
