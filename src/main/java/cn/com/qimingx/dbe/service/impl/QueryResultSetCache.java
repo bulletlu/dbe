@@ -28,7 +28,7 @@ public class QueryResultSetCache{
 	public void put(String sql,ResultSet rs){
 		ResultSet rss = cache.get(sql);
 		try {
-			if(rss != null && !rss.isClosed()){
+			if(rss != null){
 				rss.close();
 			}
 		} catch (SQLException e) {
@@ -45,12 +45,13 @@ public class QueryResultSetCache{
 		for(String sql : cache.keySet()){
 			ResultSet rs = cache.get(sql);
 			try {
-				if(rs != null && !rs.isClosed()) rs.close();
+				if(rs != null) rs.close();
 				log.debug("close resultset of " + sql);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}
+		cache.clear();
 	}
 	
 }

@@ -55,6 +55,8 @@ public class SQLQueryOperator {
 	public ProcessResult<JSON> execute(DBInfoService service,
 			GridQueryLoadBean param) {
 		String sql = param.getSql().trim();
+		//log.debug("SQL[1]:" + param.getSql());
+		//log.debug("SQL[2]:" + sql);
 		
 		if (sql != null && sql.length() > 0) {
 			if (service.isSelectQuery(sql)) {

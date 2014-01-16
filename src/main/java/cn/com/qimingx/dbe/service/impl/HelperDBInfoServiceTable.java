@@ -146,7 +146,8 @@ class HelperDBInfoServiceTable {
 		pr.setData(info);
 		return pr;
 	}
-/*
+	
+	/*
 	// 通过查询SQL语句 生成TableInfo对象(columns、data)..
 	public ProcessResult<TableInfo> readTableInfo(String sql, int start,
 			int limit, String condition, List<TableColumnInfo> columns) {

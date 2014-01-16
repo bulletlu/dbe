@@ -24,11 +24,11 @@ DBE.SQLQueryPanel = function(config) {
 		}]
 	};
 	var sqlEditor = null;
-	if (Ext.isIE) {
-		sqlEditor = new DBE.SQLSwfEditor(editorConfig);
-	} else {
+	//if (Ext.isIE) {
+	//	sqlEditor = new DBE.SQLSwfEditor(editorConfig);
+	//} else {
 		sqlEditor = new DBE.SQLEditor(editorConfig);
-	}
+	//}
 
 	// 创建grid（使用一个默认的TableInfo模型）
 	var grid = new DBE.DynamicQueryGrid({
